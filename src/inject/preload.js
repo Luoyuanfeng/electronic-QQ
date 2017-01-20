@@ -40,6 +40,7 @@ class Injector {
             return self.transformResponse(value, constants);
           });
         },
+            //感觉是各种依赖注入
         ]).run(['$rootScope', ($rootScope) => {
             //login函数
           ipcRenderer.send('wx-rendered', MMCgi.isLogin);
@@ -89,6 +90,7 @@ class Injector {
     return value;
   }
 
+    //看起来是某种用于给不可写对象绑定值得函数
   static lock(object, key, value) {
     return Object.defineProperty(object, key, {
       get: () => value,
@@ -97,6 +99,7 @@ class Injector {
     });
   }
 
+    //处理emoji表情
   checkEmojiContent(value, constants) {
     if (!(value.AddMsgList instanceof Array)) return value;
     value.AddMsgList.forEach((msg) => {
@@ -121,6 +124,7 @@ class Injector {
   }
 
   checkTemplateContent(value) {
+      //匹配正则
     const optionMenuReg = /optionMenu\(\);/;
     const messageBoxKeydownReg = /editAreaKeydown\(\$event\)/;
     if (optionMenuReg.test(value)) {
